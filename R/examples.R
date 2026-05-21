@@ -1,8 +1,5 @@
-library(metafor)
-library(dplyr)
-# load(functions.R)
-
-# EXAMPLE 1 ===================================================================
+#EXAMPLE 1 ==================================================================
+# This creates an example of 2 independent meta-analyses
 T1 <- c(.2,.5)
 T2 <- c(.3,.9)
 TT <- c(T1,T2)
@@ -45,8 +42,7 @@ random(ES=TP, SE=SP, cor_mat=PP, iter=10, type="REML")
 rma(yi=TP, vi=SP^2, method = "ML")
 random(ES=TP, SE=SP, cor_mat=PP, iter=10, type="MLE")
 
-# EXAMPLE 2 ===================================================================
-
+# EXAMPLE 2 ==================================================================
 # This creates the example of 2 overlapping meta-analyses
 # T1 and T2 with TT are the 2 primary and the comprehensive effect sizes
 # and S1, S2, and ST are the 2 primary and the comprehensive SEs

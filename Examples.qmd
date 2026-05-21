@@ -1,0 +1,186 @@
+---
+title: "Application"
+format: html
+editor: visual
+knitr:
+  opts_chunk: 
+    collapse: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set()
+library(metafor)
+library(dplyr)
+library(knitr)
+library(kableExtra)
+library(here)
+
+source(here("R", "functions.R"))
+```
+
+## Overview
+
+This document walks through two basic examples of performing Second Order Meta Analysis. The examples contain only two meta analyses; in the first example the meta analyses are independent, and in the second they share one effect size. See `examples.R` in the `R` folder for the code to run these examples, without added graphics included here.
+
+## Example 1
+
+Suppose we have two meta analyses that are independent of each other, and each has two effect sizes. Their data is shown in the tables below.
+
+```{r}
+#| code-fold: true
+#| layout-ncol: 2
+T1 <- c(.2,.5)
+T2 <- c(.3,.9)
+TT <- c(T1,T2)
+S1 <- c(.1,.2)
+S2 <- c(.12,.15)
+ST <- c(S1,S2)
+
+MA_1 = data.frame(T1, S1)
+colnames(MA_1) = c("Effect Size", "Std. Error")
+
+MA_2 = data.frame(T2, S2)
+colnames(MA_2) = c("Effect Size", "Std. Error")
+
+kable(MA_1, caption = "Meta Analaysis 1 Data") %>%
+  kable_styling(full_width = FALSE, position = "float_left")
+kable(MA_2, caption = "Meta Analaysis 2 Data") %>%
+  kable_styling(full_width = FALSE, position = "left")
+```
+
+First we compute the inverse variance weights, by summing the inverse of the squared standard error within each meta analysis. Thus, MA1 has a weight of $1/(0.1^2) + 1/(0.2^2)$ and MA2 has a weight of $1/(0.12^2) + 1/(0.15^2)$. The common weight is 0 since the MAs are independent.
+
+```{r}
+WC <- 0
+WT1 <- sum(S1^-2) 
+WT2 <- sum((S2^-2)) 
+rho <- 1/sqrt((1 + WT1/WC)*(1 + WT2/WC))
+```
+
+This generates the correlation matrix between meta-analyses
+
+```{r}
+PP <- matrix(nrow=2,ncol=2,data=rho)
+for (i in 1:2){PP[i,i]<-1}
+kable(PP, caption = "Covariance Matrix of MA1 and MA2") %>%
+  kable_styling(full_width = FALSE)
+```
+
+These are the mean effect sizes (TP) and standard errors (SP) for the two primary meta-analyses
+
+```{r}
+D1 <- sum(S1^-2*T1)/WT1
+SD1 <- sqrt(1/WT1)
+D2 <- sum(S2^-2*T2)/WT2
+SD2 <- sqrt(1/WT2)
+TP <-c(D1,D2)
+SP <-c(SD1,SD2)
+```
+
+This generates the comprehensive (COMP) meta-analysis
+
+```{r}
+DT <- sum(ST^-2*TT)/sum(ST^-2)
+SE <- sqrt(1/sum(ST^-2))
+COMP <- c(DT,SE)
+```
+
+compare results from fixed function above and comprehensive MA
+
+```{r}
+fixed(ES=TP, SE=SP, cor_mat=PP)
+print(COMP,digits=8)
+```
+
+compare results from random function above to metafor
+
+```{r}
+rma(yi=TP, vi=SP^2, method = "REML")
+random(ES=TP, SE=SP, cor_mat=PP, iter=10, type="REML")
+rma(yi=TP, vi=SP^2, method = "ML")
+random(ES=TP, SE=SP, cor_mat=PP, iter=10, type="MLE")
+```
+
+# EXAMPLE 2
+
+This creates the example of 2 overlapping meta-analyses T1 and T2 with TT are the 2 primary and the comprehensive effect sizes and S1, S2, and ST are the 2 primary and the comprehensive SEs
+
+```{r}
+T1 <- c(.2,.5)
+T2 <- c(T1[2],.9)
+TT <- c(T1,T2[2])
+S1 <- c(.1,.2)
+S2 <- c(S1[2],.15)
+ST <- c(S1,S2[2])
+```
+
+WC is the shared weight. WT1 and WT2 are the total weights, WT1U and WT2U are the unique (non-overlapping) weights, and rho is the correlation between the two meta-analyses
+
+```{r}
+WC <- S1[2]^-2 
+WT1 <- sum(S1^-2) 
+WT2 <- sum((S2^-2)) 
+WT1U <- WT1 - WC
+WT2U <- WT2 - WC
+rho <- 1/sqrt((1 + WT1U/WC)*(1 + WT2U/WC))
+```
+
+This generates the correlation matrix between meta-analyses
+
+```{r}
+PP <- matrix(nrow=2,ncol=2,data=rho)
+for (i in 1:2){PP[i,i]<-1}
+```
+
+These are the mean effect sizes (TP) and standard errors (SP) for the two primary meta-analyses
+
+```{r}
+D1 <- sum(S1^-2*T1)/WT1
+SD1 <- sqrt(1/WT1)
+D2 <- sum(S2^-2*T2)/WT2
+SD2 <- sqrt(1/WT2)
+TP <-c(D1,D2)
+SP <-c(SD1,SD2)
+```
+
+This generates the two primary (PRIM) and comprehensive (COMP) meta-analyses
+
+```{r}
+DT <- sum(ST^-2*TT)/sum(ST^-2)
+SE <- sqrt(1/sum(ST^-2))
+PRIM <- c(TP,SP)
+COMP <- c(DT,SE)
+
+fixed(ES=TP, SE=SP, cor_mat=PP)
+print(COMP)
+
+random(ES=TP, SE=SP, cor_mat=PP, iter=10, type="REML")
+
+random(ES=TP, SE=SP, cor_mat=PP, iter=10, type="MLE")
+```
+---
+title: "Examples"
+format: html
+editor: visual
+---
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+1 + 1
+```
+
+You can add options to executable code like this
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
