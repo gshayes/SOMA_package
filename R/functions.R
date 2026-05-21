@@ -1,10 +1,16 @@
 #========================================================================================================================
 #FUNCTIONS
-# Second Order Meta Analysis
-library(metafor)
-library(dplyr)
 
-# Fixed Effects SO MA of overlapping studies
+#' Fixed Effects SO MA of overlapping studies
+#'
+#' @param ES Effect sizes from the meta analyses
+#' @param SE Standard errors corresponding to the effect sizes
+#' @param cor_mat Covariance matrix of the effect sizes
+#'
+#' @returns SOMA estimated effect size, standard error, Q statistic, degrees of freedom, and p-value
+#' @export
+#'
+#' @examples
 fixed <- function(ES, SE, cor_mat) {
   
   # number of MAs
@@ -50,7 +56,7 @@ fixed <- function(ES, SE, cor_mat) {
   ANS <- matrix(nrow=1,ncol=5)
   colnames(ANS) <- c("Mean ES", "SE","Q","df", "p" )
   
-  ANS[1] <-mu_hat
+  ANS[1] <- mu_hat
   ANS[2] <- SE_mu_hat
   ANS[3] <- Q
   ANS[4] <- df
@@ -58,7 +64,18 @@ fixed <- function(ES, SE, cor_mat) {
   return(ANS)
 }
 
-# Random Effects SO MA of overlapping studies
+#' Random Effects SO MA of overlapping studies
+#'
+#' @param ES Effect sizes from the meta analyses
+#' @param SE Standard errors corresponding to the effect sizes
+#' @param cor_mat Covariance matrix of the effect sizes
+#' @param iter Number of iterations
+#' @param type ML or REML
+#'
+#' @returns SOMA estimated effect size, standard error, Q statistic, degrees of freedom, p-value, and estimated tau-squared.
+#' @export
+#'
+#' @examples
 random <- function(ES, SE, cor_mat, iter, type) {
   
   # initial fixed-effect results from TDotFM
