@@ -1,16 +1,16 @@
 Package: SOMA
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Second Order Meta Analysis
 Version: 0.1.0
 Authors@R: c(
     person(
-      "Jane", "Doe",
-      email = "jane@example.com",
+      "Gracie", "Hayes",
+      email = "gracejohnson2027@u.northwestern.com",
       role = c("aut", "cre")
     )
   )
-Description: More about what it does (maybe more than one line).
-    Continuation lines should be indented.
+Description: This package includes functions to perform fixed effects and random effects Second Order Meta Analysis.
+    It also includes code for examples and an application to real data.
 License: What license is it under?
 Encoding: UTF-8
 LazyData: true
