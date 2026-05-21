@@ -15,5 +15,6 @@ License: What license is it under?
 Encoding: UTF-8
 LazyData: true
 Imports:
-  metafor
-  dyplr
+  metafor,
+  dplyr
+RoxygenNote: 7.3.3

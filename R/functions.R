@@ -9,8 +9,6 @@
 #'
 #' @returns SOMA estimated effect size, standard error, Q statistic, degrees of freedom, and p-value
 #' @export
-#'
-#' @examples
 fixed <- function(ES, SE, cor_mat) {
   
   # number of MAs
@@ -74,8 +72,6 @@ fixed <- function(ES, SE, cor_mat) {
 #'
 #' @returns SOMA estimated effect size, standard error, Q statistic, degrees of freedom, p-value, and estimated tau-squared.
 #' @export
-#'
-#' @examples
 random <- function(ES, SE, cor_mat, iter, type) {
   
   # initial fixed-effect results from TDotFM
