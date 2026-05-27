@@ -18,7 +18,17 @@ random(ES, SE, cor_mat, iter, type)
 \item{type}{ML or REML}
 }
 \value{
-SOMA estimated effect size, standard error, Q statistic, degrees of freedom, p-value, and estimated tau-squared.
+* `Mean ES` mean effect size estimate
+
+* `SE` standard error
+
+* `Q` test statistic of test for heterogeneity
+
+* `df` degrees of freedom of test for heterogeneity
+
+* `p` p-value of test for heterogeneity
+
+`tau` measure of heterogeneity
 }
 \description{
 Random Effects SO MA of overlapping studies

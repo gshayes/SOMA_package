@@ -14,7 +14,15 @@ fixed(ES, SE, cor_mat)
 \item{cor_mat}{Covariance matrix of the effect sizes}
 }
 \value{
-SOMA estimated effect size, standard error, Q statistic, degrees of freedom, and p-value
+* `Mean ES` mean effect size estimate
+
+* `SE` standard error
+
+* `Q` test statistic of test for heterogeneity
+
+* `df` degrees of freedom of test for heterogeneity
+
+* `p` p-value of test for heterogeneity
 }
 \description{
 Fixed Effects SO MA of overlapping studies

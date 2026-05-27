@@ -90,7 +90,7 @@ fixed <- function(ES, SE, cor_mat) {
 #' 
 #' * `p` p-value of test for heterogeneity
 #' 
-#' `tau` measure of heterogeneity
+#' * `tau` measure of heterogeneity
 #' @export
 random <- function(ES, SE, cor_mat, iter, type) {
   
