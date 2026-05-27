@@ -7,7 +7,16 @@
 #' @param SE Standard errors corresponding to the effect sizes
 #' @param cor_mat Covariance matrix of the effect sizes
 #'
-#' @returns SOMA estimated effect size, standard error, Q statistic, degrees of freedom, and p-value
+#' @returns 
+#' * `Mean ES` mean effect size estimate
+#' 
+#' * `SE` standard error
+#' 
+#' * `Q` test statistic of test for heterogeneity
+#' 
+#' * `df` degrees of freedom of test for heterogeneity
+#' 
+#' * `p` p-value of test for heterogeneity
 #' @export
 fixed <- function(ES, SE, cor_mat) {
   
@@ -70,7 +79,18 @@ fixed <- function(ES, SE, cor_mat) {
 #' @param iter Number of iterations
 #' @param type ML or REML
 #'
-#' @returns SOMA estimated effect size, standard error, Q statistic, degrees of freedom, p-value, and estimated tau-squared.
+#' @returns 
+#' * `Mean ES` mean effect size estimate
+#' 
+#' * `SE` standard error
+#' 
+#' * `Q` test statistic of test for heterogeneity
+#' 
+#' * `df` degrees of freedom of test for heterogeneity
+#' 
+#' * `p` p-value of test for heterogeneity
+#' 
+#' `tau` measure of heterogeneity
 #' @export
 random <- function(ES, SE, cor_mat, iter, type) {
   
