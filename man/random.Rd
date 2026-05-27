@@ -2,7 +2,7 @@
 % Please edit documentation in R/functions.R
 \name{random}
 \alias{random}
-\title{Random Effects SO MA of overlapping studies}
+\title{Random effects second order meta analysis}
 \usage{
 random(ES, SE, cor_mat, iter, type)
 }
@@ -18,8 +18,18 @@ random(ES, SE, cor_mat, iter, type)
 \item{type}{ML or REML}
 }
 \value{
-SOMA estimated effect size, standard error, Q statistic, degrees of freedom, p-value, and estimated tau-squared.
+\item{Mean ES} mean effect size estimate from fixed effects second order meta analysis
+
+\item{SE} standard error of the mean effect size estimate
+
+\item{Q} test statistic of the test for heterogeneity
+
+\item{df} degrees of freedom of the test for heterogeneity
+
+\item{p} p-value of the test for heterogeneity
+
+\item{tau} estimate of heterogeneity
 }
 \description{
-Random Effects SO MA of overlapping studies
+Random effects second order meta analysis of overlapping studies.
 }
