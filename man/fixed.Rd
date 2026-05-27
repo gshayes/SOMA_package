@@ -7,14 +7,22 @@
 fixed(ES, SE, cor_mat)
 }
 \arguments{
-\item{ES}{Effect sizes from the meta analyses}
+\item{ES}{a numeric vector of effect sizes from the meta analyses}
 
-\item{SE}{Standard errors corresponding to the effect sizes}
+\item{SE}{a numeric vector of standard errors corresponding to the effect sizes}
 
-\item{cor_mat}{Covariance matrix of the effect sizes}
+\item{cor_mat}{a matrix of correlations between effect sizes}
 }
 \value{
-SOMA estimated effect size, standard error, Q statistic, degrees of freedom, and p-value
+\item{Mean ES} mean effect size estimate from fixed effects second order meta analysis
+
+\item{SE} standard error of the mean effect size estimate
+
+\item{Q} test statistic of the test for heterogeneity
+
+\item{df} degrees of freedom of the test for heterogeneity
+
+\item{p} p-value of the test for heterogeneity
 }
 \description{
 Fixed Effects SO MA of overlapping studies
